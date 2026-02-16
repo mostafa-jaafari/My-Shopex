@@ -2,17 +2,17 @@ import { getProductById } from '@/data/getProductBySlug'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react' // Import Suspense
 import { DisplayProduct } from './DisplayProduct'
-import { ProductDetails } from './ProductDetails'
 import { RelatedProducts } from './RelatedProducts'
+import { ProductDetails } from './ProductDetails'
 
 interface PageProps {
-  params: Promise<{ productdetails: string }>
+  params: Promise<{ productid: string }>
 }
 
 // 1. Generate SEO Metadata
 export async function generateMetadata({ params }: PageProps) {
-  const { productdetails } = await params
-  const product = await getProductById(productdetails)
+  const { productid } = await params
+  const product = await getProductById(productid)
 
   if (!product) return { title: 'Product Not Found' }
 
@@ -25,11 +25,11 @@ export async function generateMetadata({ params }: PageProps) {
   }
 }
 
-export default async function ProductDetailsPage({ params }: PageProps) {
-  const { productdetails } = await params 
+export default async function SingleProductPage({ params }: PageProps) {
+  const { productid } = await params 
   
   // 2. Fetch Main Product Data
-  const product = await getProductById(productdetails)
+  const product = await getProductById(productid)
 
   if (!product) {
     return notFound()

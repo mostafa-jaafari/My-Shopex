@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAddToFavorite } from "@/context/AddToFavoriteContext";
 import { IoIosSearch } from "react-icons/io";
+import Link from "next/link";
 
 
 export const Header = () => {
@@ -184,7 +185,9 @@ export const Header = () => {
                 </div>
 
                 {/* --- FAVORITES --- */}
-                <button className="relative">
+                <Link
+                    href="/favorites" 
+                    className="relative">
                     <FaHeart size={20}/>
                     {favorites.length > 0 && (
                         <span
@@ -193,7 +196,7 @@ export const Header = () => {
                             {favorites.length || 0}
                         </span>
                     )}
-                </button>
+                </Link>
 
                 {/* --- SEARCH --- */}
                 <div
