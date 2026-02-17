@@ -22,6 +22,7 @@ export const DisplayProduct = ({ Product_ImageUrl, Product_Sliders, Product_Titl
         };
     },[])
     
+    const PRODUCT_SLIDERS = [...Product_Sliders, Product_ImageUrl];
     return (
         <div
             ref={ShowMoreRef}
@@ -36,26 +37,34 @@ export const DisplayProduct = ({ Product_ImageUrl, Product_Sliders, Product_Titl
                     fill
                     className='object-cover'
                     priority
-                    />
+                />
             </div>
             <div
                 className='col-span-7 md:col-span-1 z-20'
             >
                 {Product_Sliders && Product_Sliders.length > 0 ? (
                 <div className='grid grid-cols-7 md:grid-cols-1 md:grid-rows-6 grid-rows-1 gap-1'>
-                    {Product_Sliders.slice(0,6).map((imgUrl: string, index: number) => (
-                    <div
+                    {PRODUCT_SLIDERS.slice(0,6).map((imgUrl: string, index: number) => (
+                        <div
                         key={index}
                         role="button"
                         onClick={index === 5 && !isShowMore ? () => setIsShowMore(true) : () => setCurrentImage(imgUrl)}
-                        className='relative cursor-pointer border border-transparent hover:border-neutral-900 aspect-square bg-neutral-200 rounded-lg overflow-hidden'
-                    >
+                        className={`relative cursor-pointer
+                            aspect-square bg-neutral-200 
+                            rounded-lg overflow-hidden border-2
+                            ${currentImage === imgUrl ?
+                                "border-[#a17e33]"
+                                :
+                                "border-transparent hover:border-[#a17e33]"}`}
+                                >
                         <Image
                             src={imgUrl}
                             alt={`${Product_Title} - Image ${index + 1}`}
                             fill
                             className='object-cover'
-                        />
+                            />
+                            <div className="relative z-50">
+                            </div>
                         {(index === 5 && !isShowMore) && (
                             <span
                             className="absolute z-10 text-white inset-0 flex justify-center items-center bg-black/60"
