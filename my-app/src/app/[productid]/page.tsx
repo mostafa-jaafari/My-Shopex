@@ -1,4 +1,4 @@
-import { getProductById } from '@/data/getProductBySlug'
+import { getProductById } from '@/data/getProductById'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react' // Import Suspense
 import { DisplayProduct } from './DisplayProduct'

@@ -260,12 +260,7 @@ export const ProductDetails = ({ product }: { product: ProductType }) => {
                 <button
                     onClick={(e) => {
                         e.preventDefault();
-                        toggleFavorite({
-                            id: product.id,
-                            image: product.image_url,
-                            title: product.title,
-                            price: product.sale_price,
-                        });
+                        toggleFavorite(product.id);
                     }}
                     className={`cursor-pointer py-3 px-3 rounded-md border
                         transition

@@ -41,7 +41,7 @@ const OfferTopHeader = () => {
 };
 export const Header = () => {
     const { cart, decrementQuantity, incrementQuantity, deleteFromCart, totalAmount, clearCart } = useCart();
-    const { favorites } = useAddToFavorite();
+    const { favoritesIds } = useAddToFavorite();
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isOpenSearch, setIsOpenSearch] = useState(false);
     const [inputSearch, setInputSearch] = useState("");
@@ -219,11 +219,11 @@ export const Header = () => {
                         href="/favorites" 
                         className="relative">
                         <FaHeart size={20}/>
-                        {favorites.length > 0 && (
+                        {favoritesIds.length > 0 && (
                             <span
                                 className="absolute left-full -translate-x-2 -top-3 shadow-sm text-[10px] flex justify-center items-center font-bold primary-bg px-1 w-max h-4 rounded-full"
                             >
-                                {favorites.length || 0}
+                                {favoritesIds.length || 0}
                             </span>
                         )}
                     </Link>

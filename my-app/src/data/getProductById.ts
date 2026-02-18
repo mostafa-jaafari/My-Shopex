@@ -45,10 +45,42 @@ export const getProductById = cache(async (productID: string) => {
     async () => fetchProductFromSupabase(productID),
     [`product-details-${productID}`], 
     {
-      revalidate: 1, 
+      revalidate: 3600, 
       tags: [`product-${productID}`] 
     }
   )
 
   return getCachedProduct()
+})
+
+
+async function fetchProductsByIdsFromSupabase(ids: string[]) {
+  const supabase = SupabaseCacheClient_Server()
+
+  const { data, error } = await supabase
+    .from('listed_products')
+    .select(PRODUCT_DETAIL_FIELDS)
+    .in('id', ids)
+
+  if (error) {
+    console.error("Error fetching products by ids:", error.message)
+    return []
+  }
+
+  return data as ProductType[]
+}
+
+export const getProductsByIds = cache(async (ids: string[]) => {
+  const sortedIds = [...ids].sort()
+
+  const getCachedProducts = unstable_cache(
+    async () => fetchProductsByIdsFromSupabase(sortedIds),
+    [`products-by-ids-${sortedIds.join("-")}`],
+    {
+      revalidate: 3600,
+      tags: sortedIds.map(id => `product-${id}`)
+    }
+  )
+
+  return getCachedProducts()
 })
